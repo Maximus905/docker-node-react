@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  node:
+    image: custom-node-alpine
+    build:
+      context: ./build
+      args:
+        - NODE_ENV=development
+        - GIT_USER="Dmitry"
+        - GIT_EMAIL="karasev.dmitry@gmail.com"
+        - PROJECT_GIT_URL
+    ports:
+      - "8080:3000"
+      - "9229:9229"
+      - "9230:9230"
+    volumes:
+      - ./app:/opt/app
+    command: ["yarn", "start"]
+volumes:
+  {}

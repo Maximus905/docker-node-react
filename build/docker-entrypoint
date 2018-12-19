@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+############################################################################
+#if package.json doesn't exists
+#	remove all in mounted folder
+#		if PROJECT_GIT_URL is defined - clone project and run yarn install
+#		else create new app
+############################################################################
+
+if [[ ! -f ./package.json ]]; then
+	 echo "run rm -Rf"
+	 rm -Rf *
+
+	if [[ -n $PROJECT_GIT_URL ]]; then
+		echo "===STAGE: running git clone $PROJECT_GIT_URL"
+		git clone $PROJECT_GIT_URL 
+		echo "===STAGE: running yarn install"
+		yarn install
+	else
+		echo "===STAGE: current directory: "
+		pwd
+		echo "===STAGE: running yarn create react-app $PROJECT_NAME"
+		yarn create react-app .
+	fi
+else 
+	echo "===STAGE: project exists"
+fi
+
+exec "$@"
