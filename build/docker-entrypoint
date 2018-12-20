@@ -23,6 +23,11 @@ if [[ ! -f ./package.json ]]; then
 		yarn create react-app .
 	fi
 else 
+	if [[ ! -d 'node_modules' ]]; then
+		echo '===STAGE: package.json exists'
+		echo 'running yarn install'
+		yarn install
+	fi
 	echo "===STAGE: project exists"
 fi
 
